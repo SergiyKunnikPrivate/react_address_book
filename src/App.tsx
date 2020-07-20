@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+import ContactList from './components/ContactList';
+import SearchInput from './components/SearchInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootStore } from './redux/store';
+import Contact from './components/Contact';
+
+function App() {  
+
+  const contactsState = useSelector((state: RootStore) => state.contacts);
+
+  const selectedContact = () => {
+    return (
+      <div className="selectedContact">
+        <h3>Selected contact:</h3>
+        <Contact contact={contactsState.selected.contact!} />
+      </div>
+    )
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <SearchInput />
+      {contactsState.selected.isSelected && selectedContact()}
+      <hr/>
+      { !contactsState.loading && <ContactList  />}
     </div>
   );
 }

@@ -1,0 +1,6 @@
+.SearchInput {
+  text-align: center;
+}
+.SearchInput * {
+  margin: 3px;
+}
